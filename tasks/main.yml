@@ -1,0 +1,48 @@
+---
+# tasks file for ansible-role-init
+
+- name: Install python support for Ansible
+  raw: yum install -y python
+  tags: init
+
+- action: setup
+  tags: init
+
+- name: Make sure essential software is installed
+  yum:
+    name:
+      - python
+      - sudo
+    state: 'latest'
+  tags: init
+
+- name: Create ansible account
+  user:
+    name: '{{ ssh_user }}'
+    state: 'present'
+    shell: '/bin/bash'
+  tags: init
+
+- name: Install ssh public key from current account
+  authorized_key:
+    user: '{{ ssh_user }}'
+    key: '{{ item }}'
+    state: 'present'
+  with_file: '{{ ssh_keys }}'
+  failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
+  tags: 
+    - init
+    - ssh
+
+- name: Configure ansible user privileged access by sudo
+  lineinfile:
+    dest: '/etc/sudoers.d/ansible'
+    state: 'present'
+    create: True
+    regexp: '^%ansible'
+    line: '%ansible ALL=(ALL) NOPASSWD: SETENV: ALL'
+    owner: 'root'
+    group: 'root'
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  tags: init

@@ -1,0 +1,4 @@
+---
+# defaults file for ansible-role-init
+
+ssh_user: ansible
