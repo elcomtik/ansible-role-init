@@ -23,12 +23,33 @@
     shell: '/bin/bash'
   tags: init
 
+- name: Get current workdir
+  tags:
+    - users
+    - pubkeys
+  set_fact:
+    pwd: "{{ lookup('env', 'PWD') }}"
+
+- name: Create path to keys (step1)
+  tags:
+    - users
+    - pubkeys
+  set_fact: 
+    interim_string: "{% for item in ssh_keys %}{{pwd}}{{ssh_keys_path}}/{{item}} {% endfor %}"
+
+- name: Create path to keys (step2)
+  tags:
+    - users
+    - pubkeys
+  set_fact: 
+    ssh_keys_path: "{{ interim_string.split() }}"
+
 - name: Install ssh public key(s)
   authorized_key:
     user: '{{ ssh_user }}'
     key: '{{ item }}'
     state: 'present'
-  with_file: '{{ ssh_keys }}'
+  with_file: '{{ ssh_keys_path }}'
   failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
   tags: 
     - init
