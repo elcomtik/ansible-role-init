@@ -10,9 +10,11 @@ Requirements
 Role Variables
 --------------
 
-ssh_user: ansible 	#by default ansibel. Set it if you need
-
-ssh_keys: 		#by default empty. Must be defined, should by path or url of pubkey file. also can by list of multiple keys
+ssh_user: ansible 	#by default ansible. Set it if you need\
+\
+ssh_keys_path: "/files/ssh-keys"	#by default /files/ssh-keys\
+\
+ssh_keys: 		#by default empty. Must be defined, should by path or url of pubkey file. also can by list of multiple keys\
 
 Dependencies
 ------------

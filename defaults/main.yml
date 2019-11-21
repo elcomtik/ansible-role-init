@@ -3,3 +3,4 @@
 
 ssh_user: ansible
 ssh_keys_path: "/files/ssh-keys"
+ssh_keys: []
