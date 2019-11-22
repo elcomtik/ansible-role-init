@@ -1,6 +1,6 @@
 ---
 # defaults file for ansible-role-init
 
-ssh_user: ansible
+ansible_user: ansible
 ssh_keys_path: "/files/ssh-keys"
 ssh_keys: []

@@ -16,9 +16,9 @@
     state: 'latest'
   tags: init
 
-- name: Create '{{ ssh_user }}' account
+- name: Create '{{ ansible_user }}' account
   user:
-    name: '{{ ssh_user }}'
+    name: '{{ ansible_user }}'
     state: 'present'
     shell: '/bin/bash'
   tags: init
@@ -46,7 +46,7 @@
 
 - name: Install ssh public key(s)
   authorized_key:
-    user: '{{ ssh_user }}'
+    user: '{{ ansible_user }}'
     key: '{{ item }}'
     state: 'present'
   with_file: '{{ ssh_keys_path }}'
@@ -55,13 +55,13 @@
     - init
     - ssh
 
-- name: Configure '{{ ssh_user }}' user privileged access by sudo
+- name: Configure '{{ ansible_user }}' user privileged access by sudo
   lineinfile:
     dest: '/etc/sudoers.d/ansible'
     state: 'present'
     create: True
-    regexp: '^%{{ ssh_user }}'
-    line: '%{{ ssh_user }} ALL=(ALL) NOPASSWD: SETENV: ALL'
+    regexp: '^%{{ ansible_user }}'
+    line: '%{{ ansible_user }} ALL=(ALL) NOPASSWD: SETENV: ALL'
     owner: 'root'
     group: 'root'
     mode: '0440'
