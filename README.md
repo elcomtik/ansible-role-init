@@ -32,13 +32,7 @@ Example Playbook
 ---------------- 
 
 	- hosts: all
-	  remote_user: root
-	
-	  pre_tasks:
-	  - name: Override variables
-	    set_fact:
-	      ansible_user: 'root' 
-	
+	  gather_facts: no
 	  roles:
 	    - ansible-role-init
 
