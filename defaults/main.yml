@@ -1,6 +1,10 @@
 ---
 # defaults file for ansible-role-init
 
-ssh_user: ansible
+bootstrap_user: "root"
+remove_bootstrap_user_ssh_keys: false
+
+ssh_user: "ansible"
 ssh_keys_path: "/files/ssh-keys"
 ssh_keys: []
+

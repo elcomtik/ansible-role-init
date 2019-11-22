@@ -1,6 +1,30 @@
 ---
 # tasks file for ansible-role-init
 
+- name: Print configured ansible_user vars
+  debug:
+    msg: |
+      ansible_user: {{ ansible_user | d('unset') }};
+      remote_user: {{ remote_user | d('unset') }}
+
+- name: Check if configured ansible user can be used
+  action: ping
+  ignore_unreachable: true  # requires Ansible >= 2.7
+  ignore_errors: yes
+  register: pingtest
+
+- meta: clear_host_errors
+
+- name: Set ansible_user if ping failed
+  set_fact:
+    ansible_user_temp: "{{ ansible_user}}"
+    ansible_user: "{{ bootstrap_user }}"
+  when: pingtest.failed | d(pingtest.unreachable) | d(false)
+
+- name: Print current ansible user
+  debug:
+    msg: "ansible_user: {{ ansible_user | d('unset') }}"
+
 - name: Make sure essential software is installed & latest version
   package:
     name: python
@@ -47,4 +71,22 @@
   with_file: '{{ ssh_keys_path }}'
   failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
   become: true
+
+
+- name: Set back configured ansible_user
+  set_fact:
+    ansible_user: "{{ ansible_user_temp }}"
+  when: ansible_user_temp is defined
+
+  #this will succed only if new ansible_user can access remote host
+- name: Remove ssh key from bootstrap user when enabled
+  authorized_key:
+    user: '{{ bootstrap_user }}'
+    key: '{{ item }}'
+    state: 'absent'
+  with_file: '{{ ssh_keys_path }}'
+  when: remove_bootstrap_user_ssh_keys
+  failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
+  become: true
+
 
