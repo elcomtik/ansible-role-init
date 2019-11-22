@@ -25,6 +25,9 @@
   debug:
     msg: "ansible_user: {{ ansible_user | d('unset') }}"
 
+- name: Gather facts
+  action: setup
+
 - name: Make sure essential software is installed & latest version
   package:
     name: python
