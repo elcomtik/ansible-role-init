@@ -28,7 +28,6 @@ This role is specific, because we sugest that host is not yet capable of Ansible
 	- hosts: all
 	  remote_user: root
 	  become: no
-	  gather_facts: False
 	
 	  pre_tasks:
 	  - name: Override variables

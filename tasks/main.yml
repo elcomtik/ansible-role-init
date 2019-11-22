@@ -1,15 +1,8 @@
 ---
 # tasks file for ansible-role-init
 
-- name: Install python support for Ansible
-  raw: yum install -y python
-  tags: init
-
-- action: setup
-  tags: init
-
-- name: Make sure essential software is installed
-  yum:
+- name: Make sure essential software is installed & latest version
+  package:
     name:
       - python
       - sudo
