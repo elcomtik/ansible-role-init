@@ -1,33 +1,33 @@
 ansible-role-init
 =========
 
-Initial configuration of host to prepare for Ansible 
+Initial configuration of host to prepare for Ansible. Will ensure python is latest version, add user for ansible, give sudo presmisions and upload ssh_key for him. 
 
 Requirements
 ------------
 
+User on remote host which run playbook must have root privileges
 
 Role Variables
 --------------
 
-ssh_user: ansible 	#by default ansible. Set it if you need\
+Defaults:\
+ssh_user: ansible\
 \
-ssh_keys_path: "/files/ssh-keys"	#by default /files/ssh-keys\
+ssh_keys_path: "/files/ssh-keys"	#path relative to playbook rundir
 \
-ssh_keys: 		#by default empty. Must be defined, should by path or url of pubkey file. also can by list of multiple keys\
+ssh_keys: [] 		#by default empty list. Must be defined, should by name of pubkey file, which is placed in ssh_key_path directory\
 
 Dependencies
 ------------
 
+none
 
 Example Playbook
-----------------
-
-This role is specific, because we sugest that host is not yet capable of Ansible managment(missing python, libs, priviledged accounts, ...). So we use very limited ansible features, to cope with this environment and hopefully setup this features with this role. :
+---------------- 
 
 	- hosts: all
 	  remote_user: root
-	  become: no
 	
 	  pre_tasks:
 	  - name: Override variables

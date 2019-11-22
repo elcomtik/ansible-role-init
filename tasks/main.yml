@@ -3,16 +3,29 @@
 
 - name: Make sure essential software is installed & latest version
   package:
-    name:
-      - python
-      - sudo
+    name: python
     state: 'latest'
+  become: true
 
 - name: Create '{{ ssh_user }}' account
   user:
     name: '{{ ssh_user }}'
     state: 'present'
     shell: '/bin/bash'
+  become: true
+
+- name: Configure '{{ ssh_user }}' user privileged access by sudo
+  lineinfile:
+    dest: '/etc/sudoers.d/ansible'
+    state: 'present'
+    create: True
+    regexp: '^%{{ ssh_user }}'
+    line: '%{{ ssh_user }} ALL=(ALL) NOPASSWD: SETENV: ALL'
+    owner: 'root'
+    group: 'root'
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  become: true
 
 - name: Get current workdir
   set_fact:
@@ -33,15 +46,5 @@
     state: 'present'
   with_file: '{{ ssh_keys_path }}'
   failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
+  become: true
 
-- name: Configure '{{ ssh_user }}' user privileged access by sudo
-  lineinfile:
-    dest: '/etc/sudoers.d/ansible'
-    state: 'present'
-    create: True
-    regexp: '^%{{ ssh_user }}'
-    line: '%{{ ssh_user }} ALL=(ALL) NOPASSWD: SETENV: ALL'
-    owner: 'root'
-    group: 'root'
-    mode: '0440'
-    validate: 'visudo -cf %s'
