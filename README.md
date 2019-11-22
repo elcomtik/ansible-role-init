@@ -12,6 +12,11 @@ Role Variables
 --------------
 
 Defaults:\
+\
+bootstrap_user: "root"\		#user which will initialy configure host, until ansible_user is created
+\
+remove_bootstrap_user_ssh_keys: false		#enables to delete ssh_key from bootstrap user account
+\
 ssh_user: ansible\
 \
 ssh_keys_path: "/files/ssh-keys"	#path relative to playbook rundir
