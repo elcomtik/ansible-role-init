@@ -31,7 +31,7 @@
 - name: Make sure essential software is installed & latest version
   package:
     name: 
-     - python
+     - python3
      - sudo
     state: 'latest'
   become: true
