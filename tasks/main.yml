@@ -36,11 +36,20 @@
     state: 'latest'
   become: true
 
+- name: Create '{{ ssh_user }}' group
+  group:
+    name: '{{ ssh_user }}'
+    state: 'present'
+    gid: '65533'
+  become: true
+
 - name: Create '{{ ssh_user }}' account
   user:
     name: '{{ ssh_user }}'
     state: 'present'
     shell: '/bin/bash'
+    uid: '65533'
+    group: '{{ ssh_user }}'
   become: true
 
 - name: Configure '{{ ssh_user }}' user privileged access by sudo
