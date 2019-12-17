@@ -71,7 +71,7 @@
 
 - name: Create path to keys (step1)
   set_fact: 
-    interim_string: "{% for item in ssh_keys %}{{pwd}}{{ssh_keys_path}}/{{item}} {% endfor %}"
+    interim_string: "{% for item in ssh_keys %}{{ssh_keys_path}}/{{item}} {% endfor %}"
 
 - name: Create path to keys (step2)
   set_fact: 
