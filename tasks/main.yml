@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible-role-init
+# tasks file for elcomtik.init
 
 - name: Print configured ansible_user vars
   debug:
@@ -17,7 +17,7 @@
 
 - name: Set ansible_user if ping failed
   set_fact:
-    ansible_user_temp: "{{ ansible_user}}"
+    ansible_user_temp: "{{ ansible_user }}"
     ansible_user: "{{ bootstrap_user }}"
   when: pingtest.failed | d(pingtest.unreachable) | d(false)
 
@@ -30,10 +30,10 @@
 
 - name: Make sure essential software is installed & latest version
   package:
-    name: 
+    name:
      - python3
      - sudo
-    state: 'latest'
+    state: 'latest'  # noqa 403
   become: true
 
 - name: Create '{{ ssh_user }}' group
@@ -70,11 +70,11 @@
     pwd: "{{ lookup('env', 'PWD') }}"
 
 - name: Create path to keys (step1)
-  set_fact: 
-    interim_string: "{% for item in ssh_keys %}{{ssh_keys_path}}/{{item}} {% endfor %}"
+  set_fact:
+    interim_string: "{% for item in ssh_keys %}{{ ssh_keys_path }}/{{ item }} {% endfor %}"
 
 - name: Create path to keys (step2)
-  set_fact: 
+  set_fact:
     ssh_keys_path: "{{ interim_string.split() }}"
 
 - name: Install ssh public key(s)
@@ -85,7 +85,6 @@
   with_file: '{{ ssh_keys_path }}'
   failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
   become: true
-
 
 - name: Set back configured ansible_user
   set_fact:
@@ -102,5 +101,3 @@
   when: remove_bootstrap_user_ssh_keys
   failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
   become: true
-
-

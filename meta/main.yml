@@ -1,10 +1,10 @@
 galaxy_info:
   author: Roman Danko
-  description: Initial configuration of host to prepare for Ansible 
+  description: Initial configuration of host to prepare for Ansible
   company: Ynet
   license: "THE BEERWARE LICENSE, rev.42"
   min_ansible_version: 2.6
-  
+
   platforms:
     - name: CentOS
       versions:
