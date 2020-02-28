@@ -3,12 +3,21 @@ galaxy_info:
   description: Initial configuration of host to prepare for Ansible
   company: Ynet
   license: "THE BEERWARE LICENSE, rev.42"
-  min_ansible_version: 2.6
+  min_ansible_version: 2.9
 
   platforms:
     - name: CentOS
       versions:
         - 7
+    - name: Fedora
+      versions:
+        - 31
+    - name: Debian
+      versions:
+        - stretch
+    - name: Ubuntu
+      versions:
+        - bionic
 
   galaxy_tags:
     - install
