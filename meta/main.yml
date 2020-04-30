@@ -2,7 +2,7 @@ galaxy_info:
   author: Roman Danko
   description: Initial configuration of host to prepare for Ansible
   company: Ynet
-  license: "THE BEERWARE LICENSE, rev.42"
+  license: "MIT"
   min_ansible_version: 2.9
 
   platforms:

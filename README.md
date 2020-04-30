@@ -34,15 +34,14 @@ Example Playbook
 	- hosts: all
 	  gather_facts: no
 	  roles:
-	    - ansible-role-init
+	    - elcomtik.init
 
 License
 -------
 
-"THE BEERWARE LICENSE" (Revision 42):                                                                                                                                            
-                                                                                                                                                                                 Roman Danko wrote this code. As long as you retain this notice, you can do whatever you want with this stuff. If we meet someday, and you think this stuff is worth it, you can buy me a beer in return.
+MIT                                                                                                                                          
 
 Author Information
 ------------------
 
-roman.danko@ynet.sk, Ynet, Staré Grunty 53,841 04 Bratislava 4, Slovakia, www.ynet.sk
+mail@romandanko.sk, www.romandanko.sk
