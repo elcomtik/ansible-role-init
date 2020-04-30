@@ -13,15 +13,20 @@ Role Variables
 
 Defaults:\
 \
-bootstrap_user: "root"\				#user which will initialy configure host, until ansible_user is created
+#user which will initialy configure host, until ansible_user is created\
+bootstrap_user: "root"\
 \
-remove_bootstrap_user_ssh_keys: false		#enables to delete ssh_key from bootstrap user account
+#enables to delete ssh_key from bootstrap user account\
+remove_bootstrap_user_ssh_keys: false\
 \
+#user which will be used by ansible\
 ssh_user: ansible\
 \
-ssh_keys_path: "files/ssh-keys"			#path relative to playbook directory
+#path relative to playbook directory\
+ssh_keys_path: "files/ssh-keys"\
 \
-ssh_keys: [] 					#by default empty list. Must be defined, should by name of pubkey file, which is placed in ssh_key_path directory\
+#by default empty list. Must be defined, should by name of pubkey file, which is placed in ssh_key_path directory\
+ssh_keys: []\
 
 Dependencies
 ------------
