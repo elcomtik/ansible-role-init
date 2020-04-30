@@ -4,8 +4,8 @@
 - name: Print configured ansible_user vars
   debug:
     msg: |
-      ansible_user: {{ ansible_user | d('unset') }};
-      remote_user: {{ remote_user | d('unset') }}
+      ansible_user: "{{ ansible_user | d('unset') }}"
+      remote_user: "{{ remote_user | d('unset') }}"
 
 - name: Check if configured ansible user can be used
   action: ping
