@@ -175,7 +175,9 @@
     state: "enabled"
     permanent: True
   become: True
-  when: (ansible_port_temp is defined) and (ansible_facts.services['firewalld.service']) is defined and (ansible_facts.services['firewalld.service'].state == "running")
+  when: (ansible_port_temp is defined) and
+        (ansible_facts.services['firewalld.service'] is defined) and
+        (ansible_facts.services['firewalld.service'].state == "running")
   notify: "reload firewalld service"
 
 - name: Enable new SSH port on ufw
@@ -184,7 +186,9 @@
     port: "{{ ansible_port_temp }}"
     proto: "tcp"
   become: True
-  when: (ansible_port_temp is defined) and (ansible_facts.services['ufw.service']) is defined and (ansible_facts.services['ufw.service'].state == "running")
+  when: (ansible_port_temp is defined) and
+        (ansible_facts.services['ufw.service'] is defined) and
+        (ansible_facts.services['ufw.service'].state == "running")
 
 - name: Flush handlers before continuing
   meta: flush_handlers
