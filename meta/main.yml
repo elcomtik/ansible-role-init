@@ -1,28 +1,32 @@
 galaxy_info:
   author: Roman Danko
+  role_name: init
   description: Initial configuration of host to prepare for Ansible
-  company: Ynet
   license: "MIT"
   min_ansible_version: 2.9
 
   platforms:
-    - name: CentOS
+    - name: EL
       versions:
         - 7
+        - 8
     - name: Fedora
       versions:
         - 31
     - name: Debian
       versions:
+        - jessie
         - stretch
     - name: Ubuntu
       versions:
         - bionic
+        - focal
 
   galaxy_tags:
-    - install
-    - configure
+    - intialize
+    - user
     - sudo
     - ssh
+    - port
 
 dependencies: []
