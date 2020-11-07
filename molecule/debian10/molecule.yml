@@ -11,10 +11,10 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: fedora
-    image: jrei/systemd-fedora
+  - name: debian10
+    image: jrei/systemd-debian:10
     privileged: true
-    command: /usr/sbin/init
+    command: /lib/systemd/systemd
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:

@@ -1,12 +1,11 @@
 ---
 image: docker:git
 
-variables:
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
-
 services:
   - docker:dind
+
+stages:
+  - molecule-test
 
 before_script:
   - apk update && apk add --no-cache docker
@@ -15,26 +14,44 @@ before_script:
     musl-dev libffi-dev openssl-dev openssh
   - docker info
   - python3 --version
-  - pip3 install -r requirements.txt
+  - python3 -m venv venv
+  - source venv/bin/activate
+  - pip3 install --upgrade pip pip-tools
+  - pip-sync requirements.txt requirements-dev.txt
   - ansible --version
   - molecule --version
 
 centos7:
-  stage: test
+  stage: molecule-test
   script:
     - molecule test --scenario-name centos7
 
+centos8:
+  stage: molecule-test
+  script:
+    - molecule test --scenario-name centos8
+
 fedora:
-  stage: test
+  stage: molecule-test
   script:
     - molecule test --scenario-name fedora
 
 debian9:
-  stage: test
+  stage: molecule-test
   script:
-    - molecule test --scenario-name fedora
+    - molecule test --scenario-name debian9
+
+debian10:
+  stage: molecule-test
+  script:
+    - molecule test --scenario-name debian10
 
 ubuntu1804:
-  stage: test
+  stage: molecule-test
   script:
     - molecule test --scenario-name ubuntu1804
+
+ubuntu2004:
+  stage: molecule-test
+  script:
+    - molecule test --scenario-name ubuntu2004
