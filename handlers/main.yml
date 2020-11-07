@@ -1,2 +1,15 @@
 ---
 # handlers file for elcomtik.init
+- name: restart sshd service
+  service:
+    name: "sshd"
+    state: "restarted"
+  become: True
+  async: 5
+  poll: 1
+
+- name: reload firewalld service
+  service:
+    name: "firewalld"
+    state: "reloaded"
+  become: true

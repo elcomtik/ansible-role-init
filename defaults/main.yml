@@ -7,3 +7,5 @@ remove_bootstrap_user_ssh_keys: false
 ssh_user: "ansible"
 ssh_keys_path: "files/ssh-keys"
 ssh_keys: []
+
+remove_default_ssh_port: false

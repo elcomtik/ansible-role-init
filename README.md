@@ -1,7 +1,12 @@
 ansible-role-init
 =========
 
-Initial configuration of host to prepare for Ansible. Will ensure python is latest version, add user for ansible, give sudo presmisions and upload ssh_key for him. 
+Initial configuration of host to prepare for Ansible. 
+Will ensure:
+- python is latest version
+- user for ansible is created with sudo presmisions
+- ssh_key for ansible user is added
+- sshd port is configured acording to inventory value of ansible_port
 
 Requirements
 ------------
@@ -27,6 +32,9 @@ ssh_keys_path: "files/ssh-keys"\
 \
 #by default empty list. Must be defined, should by name of pubkey file, which is placed in ssh_key_path directory\
 ssh_keys: []\
+\
+#enables to remove default(22) SSH listen port\
+remove_default_ssh_port: false\
 
 Dependencies
 ------------
