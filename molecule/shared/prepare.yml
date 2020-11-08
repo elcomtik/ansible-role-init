@@ -6,12 +6,12 @@
         update_cache: true
       become: true
       when: ansible_os_family == "Debian"
-    
+
     - name: Ensure SSHD is installed
       package:
         name: openssh-server
       become: true
-    
+
     - name: Ensure SSHD is started
       service:
         name: sshd
