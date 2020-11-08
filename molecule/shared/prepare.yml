@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - name: Ensure SSHD is installed
+      package:
+        name: openssh-server
+      become: true

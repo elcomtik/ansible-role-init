@@ -20,6 +20,7 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
+    prepare: ../shared/prepare.yml
     converge: ../shared/converge.yml
 verifier:
   name: ansible
