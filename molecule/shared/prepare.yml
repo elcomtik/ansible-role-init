@@ -5,3 +5,9 @@
       package:
         name: openssh-server
       become: true
+    
+    - name: Ensure SSHD is started
+      service:
+        name: sshd
+        state: started
+      become: true
