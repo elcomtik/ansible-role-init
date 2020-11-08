@@ -167,6 +167,7 @@
 
 - name: Populate service facts to check later if some firewall is running
   service_facts:
+  when: ansible_port_temp is defined
 
 - name: Enable new SSH port on firewalld
   firewalld:
@@ -206,5 +207,5 @@
     state: "absent"
     validate: "sshd -f %s -t"
   become: True
-  when: remove_default_ssh_port
+  when: (remove_default_ssh_port) and (ansible_port|int != 22)
   notify: "restart sshd service"
