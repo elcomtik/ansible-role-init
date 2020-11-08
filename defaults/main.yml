@@ -8,4 +8,5 @@ ssh_user: "ansible"
 ssh_keys_path: "files/ssh-keys"
 ssh_keys: []
 
+ansible_port: 22
 remove_default_ssh_port: false
