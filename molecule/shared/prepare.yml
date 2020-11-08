@@ -1,6 +1,12 @@
 ---
 - hosts: all
   tasks:
+    - name: Update Apt Cache
+      apt:
+        update_cache: true
+      become: true
+      when: ansible_os_family == "Debian"
+    
     - name: Ensure SSHD is installed
       package:
         name: openssh-server
