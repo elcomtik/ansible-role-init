@@ -1,15 +1,15 @@
 ---
 # tasks file for elcomtik.init
 
-- name: Print configured ansible_user & ansible_port vars
-  debug:
+- name: "Print configured ansible_user & ansible_port vars"
+  ansible.builtin.debug:
     msg: |
       ansible_user: "{{ ansible_user | d('unset') }}"
       remote_user: "{{ remote_user | d('unset') }}"
       ansible_port: "{{ ansible_port | d('unset') }}"
 
-- name: Check if inventory SSH port is reachable
-  wait_for:
+- name: "Check if inventory SSH port is reachable"
+  ansible.builtin.wait_for:
     port: "{{ ansible_port }}"
     state: "started"
     host: "{{ ansible_host | d(inventory_hostname) }}"
@@ -19,8 +19,8 @@
   ignore_errors: True
   register: inventory_ssh
 
-- name: Check if default SSH port is reachable
-  wait_for:
+- name: "Check if default SSH port is reachable"
+  ansible.builtin.wait_for:
     port: "22"
     state: "started"
     host: "{{ ansible_host | d(inventory_hostname) }}"
@@ -31,55 +31,61 @@
   register: default_ssh
   when: (inventory_ssh is defined) and (inventory_ssh.state is undefined)
 
-- name: Fail if neither inventory SSH port nor default defined port was reachable
-  fail:
+- name: "Fail if neither inventory SSH port nor default defined port was reachable"
+  ansible.builtin.fail:
     msg: "The SSH port is neither {{ ansible_port }} or 22."
-  when: (inventory_ssh.state is undefined) and (default_ssh is defined) and (default_ssh.state is undefined)
+  when: 
+    - inventory_ssh.state is undefined
+    - default_ssh is defined
+    - default_ssh.state is undefined
 
-- name: Set ansible_port to default if is reachable
-  set_fact:
+- name: "Set ansible_port to default if is reachable"
+  ansible.builtin.set_fact:
     ansible_port_temp: "{{ ansible_port }}"
     ansible_port: "22"
-  when: (default_ssh.state is defined) and (default_ssh.state == "started")
+  when:
+    - default_ssh.state is defined
+    - default_ssh.state == "started"
 
-- name: Check if configured ansible user & port can be used
-  action: ping
-  ignore_unreachable: True  # requires Ansible >= 2.7
+- name: "Check if configured ansible user & port can be used"
+  ansible.builtin.ping:
+  ignore_unreachable: True
   ignore_errors: True
   register: pingtest
 
-- meta: clear_host_errors
+- name: "Clear host errors before continuing"
+  ansible.builtin.meta: clear_host_errors
 
-- name: Set ansible_user if ping failed
-  set_fact:
+- name: "Set ansible_user if ping failed"
+  ansible.builtin.set_fact:
     ansible_user_temp: "{{ ansible_user }}"
     ansible_user: "{{ bootstrap_user }}"
   when: pingtest.failed | d(pingtest.unreachable) | d(False)
 
-- name: Print current ansible user
-  debug:
+- name: "Print current ansible user"
+  ansible.builtin.debug:
     msg: "ansible_user: {{ ansible_user | d('unset') }}"
 
-- name: Gather facts
-  action: setup
+- name: "Gather facts"
+  ansible.builtin.setup:
 
-- name: Make sure essential software is installed & latest version
-  package:
+- name: "Make sure essential software is installed & latest version"
+  ansible.builtin.package:
     name:
-     - python3
-     - sudo
+     - "python3"
+     - "sudo"
     state: 'latest'  # noqa 403
   become: True
 
-- name: Create '{{ ssh_user }}' group
-  group:
+- name: "Create '{{ ssh_user }}' group"
+  ansible.builtin.group:
     name: '{{ ssh_user }}'
     state: 'present'
     gid: '65533'
   become: True
 
-- name: Create '{{ ssh_user }}' account
-  user:
+- name: "Create '{{ ssh_user }}' account"
+  ansible.builtin.user:
     name: '{{ ssh_user }}'
     state: 'present'
     shell: '/bin/bash'
@@ -87,8 +93,8 @@
     group: '{{ ssh_user }}'
   become: True
 
-- name: Configure '{{ ssh_user }}' user privileged access by sudo
-  lineinfile:
+- name: "Configure '{{ ssh_user }}' user privileged access by sudo"
+  ansible.builtin.lineinfile:
     dest: '/etc/sudoers.d/ansible'
     state: 'present'
     create: True
@@ -100,112 +106,122 @@
     validate: 'visudo -cf %s'
   become: True
 
-- name: Get current workdir
-  set_fact:
+- name: "Get current workdir"
+  ansible.builtin.set_fact:
     pwd: "{{ lookup('env', 'PWD') }}"
 
-- name: Create path to keys (step1)
-  set_fact:
+- name: "Create path to keys (step1)"
+  ansible.builtin.set_fact:
     interim_string: "{% for item in ssh_keys %}{{ ssh_keys_path }}/{{ item }} {% endfor %}"
 
-- name: Create path to keys (step2)
-  set_fact:
+- name: "Create path to keys (step2)"
+  ansible.builtin.set_fact:
     ssh_keys_path: "{{ interim_string.split() }}"
 
-- name: Install ssh public key(s)
-  authorized_key:
+- name: "Install ssh public key(s)"
+  ansible.posix.authorized_key:
     user: '{{ ssh_user }}'
     key: '{{ item }}'
     state: 'present'
   become: True
   with_file: '{{ ssh_keys_path }}'
-  failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
+  failed_when: >
+    ssh_keys is undefined or
+    (ssh_keys is defined and not ssh_keys)
 
-- name: Set back configured ansible_user
-  set_fact:
+- name: "Set back configured ansible_user"
+  ansible.builtin.set_fact:
     ansible_user: "{{ ansible_user_temp }}"
   when: ansible_user_temp is defined
 
   #this will succed only if new ansible_user can access remote host
-- name: Remove ssh key from bootstrap user when enabled
-  authorized_key:
+- name: "Remove ssh key from bootstrap user when enabled"
+  ansible.builtin.authorized_key:
     user: '{{ bootstrap_user }}'
     key: '{{ item }}'
     state: 'absent'
   become: True
   with_file: '{{ ssh_keys_path }}'
   when: remove_bootstrap_user_ssh_keys
-  failed_when: (ssh_keys is undefined or (ssh_keys is defined and not ssh_keys))
+  failed_when: >
+    ssh_keys is undefined or
+    (ssh_keys is defined and not ssh_keys)
 
-- name: Ensure SSH will listen on port 22 if we plan to change it later
-  lineinfile:
+- name: "Ensure SSH will listen on port 22 if we plan to change it later"
+  ansible.builtin.lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: "^#Port 22"
     line: "Port 22"
   become: True
-  when: ansible_port_temp is defined
   notify: "restart sshd service"
+  when: ansible_port_temp is defined
 
-- name: Setup SSH to listen on inventory port
-  lineinfile:
+- name: "Setup SSH to listen on inventory port"
+  ansible.builtin.lineinfile:
     dest: "/etc/ssh/sshd_config"
     insertafter: "^Port 22"
     line: "Port {{ ansible_port_temp }}"
     validate: "sshd -f %s -t"
   become: True
-  when: ansible_port_temp is defined
   notify: "restart sshd service"
+  when: ansible_port_temp is defined
 
-- name: Setup selinux for alternate SSH port
-  seport:
+- name: "Setup selinux for alternate SSH port"
+  community.general.seport:
     ports: "{{ ansible_port_temp }}"
     proto: "tcp"
     setype: "ssh_port_t"
     state: "present"
   become: True
-  when: (ansible_port_temp is defined) and (ansible_selinux.status == "enabled")
+  when: 
+    - ansible_port_temp is defined
+    - ansible_selinux.status == "enabled"
 
-- name: Populate service facts to check later if some firewall is running
-  service_facts:
+- name: "Populate service facts to check later if some firewall is running"
+  ansible.builtin.service_facts:
   when: ansible_port_temp is defined
 
-- name: Enable new SSH port on firewalld
-  firewalld:
+- name: "Enable new SSH port on firewalld"
+  ansible.posix.firewalld:
     zone: "public"
     port: "{{ ansible_port_temp }}/tcp"
     state: "enabled"
     permanent: True
   become: True
-  when: (ansible_port_temp is defined) and
-        (ansible_facts.services['firewalld.service'] is defined) and
-        (ansible_facts.services['firewalld.service'].state == "running")
   notify: "reload firewalld service"
+  when: 
+    - ansible_port_temp is defined
+    - ansible_facts.services['firewalld.service'] is defined
+    - ansible_facts.services['firewalld.service'].state == "running"
 
-- name: Enable new SSH port on ufw
-  ufw:
+- name: "Enable new SSH port on ufw"
+  community.general.ufw:
     rule: "allow"
     port: "{{ ansible_port_temp }}"
     proto: "tcp"
   become: True
-  when: (ansible_port_temp is defined) and
-        (ansible_facts.services['ufw.service'] is defined) and
-        (ansible_facts.services['ufw.service'].state == "running")
+  when: 
+    - ansible_port_temp is defined
+    - ansible_facts.services['ufw.service'] is defined
+    - ansible_facts.services['ufw.service'].state == "running"
 
-- name: Flush handlers before continuing
-  meta: flush_handlers
+- name: "Flush handlers before continuing"
+  ansible.builtin.meta: flush_handlers
 
-- name: Set back configured ansible_port
-  set_fact:
+- name: "Set back configured ansible_port"
+  ansible.builtin.set_fact:
     ansible_port: "{{ ansible_port_temp }}"
   when: ansible_port_temp is defined
 
   #this will succed only if inventory ansible_port is configured properly
-- name: Remove default port from SSH config when enabled
-  lineinfile:
+- name: "Remove default port from SSH config when enabled"
+  ansible.builtin.lineinfile:
     dest: "/etc/ssh/sshd_config"
     line: "Port 22"
     state: "absent"
     validate: "sshd -f %s -t"
   become: True
-  when: (remove_default_ssh_port) and (ansible_port|int != 22)
   notify: "restart sshd service"
+  when: 
+    - remove_default_ssh_port
+    - ansible_port|int != 22

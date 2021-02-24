@@ -3,7 +3,7 @@ galaxy_info:
   role_name: init
   description: Initial configuration of host to prepare for Ansible
   license: "MIT"
-  min_ansible_version: 2.9
+  min_ansible_version: 2.10
 
   platforms:
     - name: EL
@@ -13,10 +13,11 @@ galaxy_info:
     - name: Fedora
       versions:
         - 32
+        - 33
     - name: Debian
       versions:
-        - jessie
         - stretch
+        - buster
     - name: Ubuntu
       versions:
         - bionic
