@@ -3,7 +3,7 @@ galaxy_info:
   role_name: init
   description: Initial configuration of host to prepare for Ansible
   license: "MIT"
-  min_ansible_version: 2.10
+  min_ansible_version: 3.0.0
 
   platforms:
     - name: EL
