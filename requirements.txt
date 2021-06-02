@@ -187,7 +187,7 @@ tqdm==4.60.0
     # via nltk
 typing-extensions==3.7.4.3
     # via rich
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 wcmatch==8.1.2
     # via ansible-lint
