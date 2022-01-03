@@ -34,7 +34,7 @@
 - name: "Fail if neither inventory SSH port nor default defined port was reachable"
   ansible.builtin.fail:
     msg: "The SSH port is neither {{ ansible_port }} or 22."
-  when: 
+  when:
     - inventory_ssh.state is undefined
     - default_ssh is defined
     - default_ssh.state is undefined
