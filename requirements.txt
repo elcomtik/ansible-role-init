@@ -4,14 +4,14 @@
 #
 #    pip-compile requirements.in
 #
-ansible==3.4.0
+ansible==4.2.0
     # via -r requirements.in
-ansible-base==2.10.16
-    # via ansible
 ansible-compat==0.5.0
     # via
     #   molecule
     #   molecule-docker
+ansible-core==2.11.7
+    # via ansible
 ansible-lint==5.3.1
     # via -r requirements.in
 arrow==1.2.1
@@ -52,7 +52,7 @@ cookiecutter==1.7.3
     # via molecule
 cryptography==36.0.1
     # via
-    #   ansible-base
+    #   ansible-core
     #   paramiko
 distro==1.6.0
     # via selinux
@@ -69,12 +69,10 @@ ghp-import==2.0.2
 idna==3.3
     # via requests
 importlib-metadata==4.10.0
-    # via
-    #   markdown
-    #   mkdocs
+    # via mkdocs
 jinja2==3.0.3
     # via
-    #   ansible-base
+    #   ansible-core
     #   cookiecutter
     #   jinja2-time
     #   mkdocs
@@ -97,7 +95,7 @@ molecule-docker==1.1.0
     # via -r requirements.in
 packaging==21.3
     # via
-    #   ansible-base
+    #   ansible-core
     #   ansible-lint
     #   mkdocs
     #   molecule
@@ -129,8 +127,8 @@ python-slugify==5.0.2
     # via cookiecutter
 pyyaml==5.4.1
     # via
-    #   ansible-base
     #   ansible-compat
+    #   ansible-core
     #   ansible-lint
     #   mkdocs
     #   molecule
@@ -143,6 +141,8 @@ requests==2.27.0
     #   cookiecutter
     #   docker
     #   molecule-docker
+resolvelib==0.5.4
+    # via ansible-core
 rich==10.16.2
     # via
     #   ansible-lint
