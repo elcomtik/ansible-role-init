@@ -173,7 +173,7 @@
     setype: "ssh_port_t"
     state: "present"
   become: True
-  when: 
+  when:
     - ansible_port_temp is defined
     - ansible_selinux.status == "enabled"
 
@@ -189,7 +189,7 @@
     permanent: True
   become: True
   notify: "reload firewalld service"
-  when: 
+  when:
     - ansible_port_temp is defined
     - ansible_facts.services['firewalld.service'] is defined
     - ansible_facts.services['firewalld.service'].state == "running"
@@ -200,7 +200,7 @@
     port: "{{ ansible_port_temp }}"
     proto: "tcp"
   become: True
-  when: 
+  when:
     - ansible_port_temp is defined
     - ansible_facts.services['ufw.service'] is defined
     - ansible_facts.services['ufw.service'].state == "running"
@@ -222,6 +222,6 @@
     validate: "sshd -f %s -t"
   become: True
   notify: "restart sshd service"
-  when: 
+  when:
     - remove_default_ssh_port
     - ansible_port|int != 22
