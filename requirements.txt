@@ -69,9 +69,7 @@ ghp-import==2.0.2
 idna==3.3
     # via requests
 importlib-metadata==4.10.0
-    # via
-    #   markdown
-    #   mkdocs
+    # via mkdocs
 jinja2==3.0.3
     # via
     #   ansible-base
@@ -101,7 +99,7 @@ packaging==21.3
     #   ansible-lint
     #   mkdocs
     #   molecule
-paramiko==2.9.1
+paramiko==2.10.1
     # via molecule
 pathspec==0.9.0
     # via yamllint
@@ -148,10 +146,10 @@ rich==10.16.2
     #   ansible-lint
     #   enrich
     #   molecule
-ruamel.yaml==0.17.20
+ruamel-yaml==0.17.20
     # via ansible-lint
-ruamel.yaml.clib==0.2.6
-    # via ruamel.yaml
+ruamel-yaml-clib==0.2.6
+    # via ruamel-yaml
 selinux==0.2.1
     # via
     #   -r requirements.in
@@ -161,6 +159,7 @@ six==1.16.0
     # via
     #   bcrypt
     #   cookiecutter
+    #   paramiko
     #   pynacl
     #   python-dateutil
 subprocess-tee==0.3.5
