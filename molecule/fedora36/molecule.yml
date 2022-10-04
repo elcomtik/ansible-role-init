@@ -11,8 +11,8 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: fedora
-    image: jrei/systemd-fedora
+  - name: fedora36
+    image: mrlesmithjr/fedora:36
     privileged: true
     command: /usr/sbin/init
     volumes:
