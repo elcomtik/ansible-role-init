@@ -82,14 +82,14 @@
     state: 'latest'  # noqa package-latest
   become: true
 
-- name: "Create '{{ ssh_user }}' group"
+- name: "Create group '{{ ssh_user }}'"
   ansible.builtin.group:
     name: '{{ ssh_user }}'
     state: 'present'
     gid: '65533'
   become: true
 
-- name: "Create '{{ ssh_user }}' account"
+- name: "Create account '{{ ssh_user }}'"
   ansible.builtin.user:
     name: '{{ ssh_user }}'
     state: 'present'
@@ -98,7 +98,7 @@
     group: '{{ ssh_user }}'
   become: true
 
-- name: "Configure '{{ ssh_user }}' user privileged access by sudo"
+- name: "Configure sudo privileges for user '{{ ssh_user }}'"
   ansible.builtin.lineinfile:
     dest: '/etc/sudoers.d/ansible'
     state: 'present'
