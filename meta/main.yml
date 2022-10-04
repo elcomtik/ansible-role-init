@@ -1,9 +1,10 @@
 galaxy_info:
-  author: Roman Danko
+  namespace: elcomtik
   role_name: init
+  author: Roman Danko
   description: Initial configuration of host to prepare for Ansible
   license: "MIT"
-  min_ansible_version: 3.0.0
+  min_ansible_version: 2.10
 
   platforms:
     - name: EL
