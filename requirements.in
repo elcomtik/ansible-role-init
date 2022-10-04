@@ -1,5 +1,5 @@
 # Python requirements for executing
-ansible ~=3.0
+ansible
 ansible-lint
 docker
 mkdocs

@@ -4,16 +4,16 @@
 #
 #    pip-compile requirements.in
 #
-ansible==3.4.0
+ansible==6.4.0
     # via -r requirements.in
-ansible-base==2.10.17
-    # via ansible
 ansible-compat==2.2.1
     # via
     #   ansible-lint
     #   molecule
 ansible-core==2.13.4
-    # via ansible-lint
+    # via
+    #   ansible
+    #   ansible-lint
 ansible-lint==6.7.0
     # via -r requirements.in
 arrow==1.2.3
@@ -53,9 +53,7 @@ commonmark==0.9.1
 cookiecutter==2.1.1
     # via molecule
 cryptography==38.0.1
-    # via
-    #   ansible-base
-    #   ansible-core
+    # via ansible-core
 distro==1.7.0
     # via selinux
 docker==6.0.0
@@ -78,7 +76,6 @@ importlib-metadata==5.0.0
     #   mkdocs
 jinja2==3.1.2
     # via
-    #   ansible-base
     #   ansible-core
     #   cookiecutter
     #   jinja2-time
@@ -108,7 +105,6 @@ mypy-extensions==0.4.3
     # via black
 packaging==21.3
     # via
-    #   ansible-base
     #   ansible-core
     #   ansible-lint
     #   build
@@ -143,7 +139,6 @@ python-slugify==6.1.2
     # via cookiecutter
 pyyaml==6.0
     # via
-    #   ansible-base
     #   ansible-compat
     #   ansible-core
     #   ansible-lint
