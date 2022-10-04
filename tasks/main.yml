@@ -158,7 +158,7 @@
     regexp: "^#Port 22"
     line: "Port 22"
   become: true
-  notify: "restart sshd service"
+  notify: "Restart sshd service"
   when: ansible_port_temp is defined
 
 - name: "Setup SSH to listen on inventory port"
@@ -168,7 +168,7 @@
     line: "Port {{ ansible_port_temp }}"
     validate: "sshd -f %s -t"
   become: true
-  notify: "restart sshd service"
+  notify: "Restart sshd service"
   when: ansible_port_temp is defined
 
 - name: "Setup selinux for alternate SSH port"
@@ -193,7 +193,7 @@
     state: "enabled"
     permanent: true
   become: true
-  notify: "reload firewalld service"
+  notify: "Reload firewalld service"
   when:
     - ansible_port_temp is defined
     - ansible_facts.services['firewalld.service'] is defined
@@ -226,7 +226,7 @@
     state: "absent"
     validate: "sshd -f %s -t"
   become: true
-  notify: "restart sshd service"
+  notify: "Restart sshd service"
   when:
     - remove_default_ssh_port
     - ansible_port|int != 22
