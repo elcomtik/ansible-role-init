@@ -1,9 +1,10 @@
 # ansible-role-init
 
+![Molecule](https://github.com/ansible-community/ansible-consul/workflows/default/badge.svg?branch=main&event=pull_request)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/elcomtik/ansible-role-init.svg)](http://isitmaintained.com/project/elcomtik/ansible-role-init "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/elcomtik/ansible-role-init.svg)](http://isitmaintained.com/project/elcomtik/ansible-role-init "Percentage of issues still open")
 
-Initial configuration of host to prepare for Ansible. 
+Initial configuration of host to prepare for Ansible.
 Will ensure:
 - python is latest version
 - user for ansible is created with sudo presmisions
@@ -54,7 +55,7 @@ none
 
 ## License
 
-MIT                                                                                                                                          
+MIT
 
 ## Author Information
 

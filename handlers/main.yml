@@ -1,15 +1,15 @@
 ---
 # handlers file for elcomtik.init
-- name: restart sshd service
-  service:
+- name: Restart sshd service
+  ansible.builtin.service:
     name: "sshd"
     state: "restarted"
-  become: True
+  become: true
   async: 5
   poll: 1
 
-- name: reload firewalld service
-  service:
+- name: Reload firewalld service
+  ansible.builtin.service:
     name: "firewalld"
     state: "reloaded"
   become: true

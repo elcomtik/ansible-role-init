@@ -1,19 +1,20 @@
 ---
 - hosts: all
+  name: Prepare host for tests
   tasks:
     - name: Update Apt Cache
-      apt:
+      ansible.builtin.apt:
         update_cache: true
       become: true
       when: ansible_os_family == "Debian"
 
     - name: Ensure SSHD is installed
-      package:
+      ansible.builtin.package:
         name: openssh-server
       become: true
 
     - name: Ensure SSHD is started
-      service:
+      ansible.builtin.service:
         name: sshd
         state: started
       become: true
