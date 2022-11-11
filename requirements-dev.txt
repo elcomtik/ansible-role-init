@@ -4,11 +4,11 @@
 #
 #    pip-compile requirements-dev.in
 #
-astroid==2.12.10
+astroid==2.12.12
     # via pylint
-autopep8==1.7.0
+autopep8==2.0.0
     # via -r requirements-dev.in
-dill==0.3.5.1
+dill==0.3.6
     # via pylint
 distlib==0.3.6
     # via virtualenv
@@ -21,7 +21,7 @@ flake8==5.0.4
     # via -r requirements-dev.in
 isort==5.10.1
     # via pylint
-lazy-object-proxy==1.7.1
+lazy-object-proxy==1.8.0
     # via astroid
 mccabe==0.7.0
     # via
@@ -31,7 +31,7 @@ packaging==21.3
     # via
     #   -c requirements.txt
     #   tox
-platformdirs==2.5.2
+platformdirs==2.5.3
     # via
     #   -c requirements.txt
     #   pylint
@@ -49,7 +49,7 @@ pycodestyle==2.9.1
     #   flake8
 pyflakes==2.5.0
     # via flake8
-pylint==2.15.3
+pylint==2.15.5
     # via -r requirements-dev.in
 pyparsing==3.0.9
     # via
@@ -59,23 +59,22 @@ six==1.16.0
     # via
     #   -c requirements.txt
     #   tox
-toml==0.10.2
-    # via autopep8
 tomli==2.0.1
     # via
     #   -c requirements.txt
+    #   autopep8
     #   pylint
     #   tox
-tomlkit==0.11.5
+tomlkit==0.11.6
     # via pylint
-tox==3.26.0
+tox==3.27.0
     # via -r requirements-dev.in
-typing-extensions==4.3.0
+typing-extensions==4.4.0
     # via
     #   -c requirements.txt
     #   astroid
     #   pylint
-virtualenv==20.16.5
+virtualenv==20.16.6
     # via tox
 wrapt==1.14.1
     # via astroid
