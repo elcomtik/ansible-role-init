@@ -26,16 +26,6 @@ centos7:
   script:
     - molecule test --scenario-name centos7
 
-centos8:
-  stage: molecule-test
-  script:
-    - molecule test --scenario-name centos8
-
-debian9:
-  stage: molecule-test
-  script:
-    - molecule test --scenario-name debian9
-
 debian10:
   stage: molecule-test
   script:
@@ -46,27 +36,32 @@ debian11:
   script:
     - molecule test --scenario-name debian11
 
-fedora35:
-  stage: molecule-test
-  script:
-    - molecule test --scenario-name fedora35
-
 fedora36:
   stage: molecule-test
   script:
     - molecule test --scenario-name fedora36
+
+fedora37:
+  stage: molecule-test
+  script:
+    - molecule test --scenario-name fedora37
+
+fedora38:
+  stage: molecule-test
+  script:
+    - molecule test --scenario-name fedora38
 
 rocky8:
   stage: molecule-test
   script:
     - molecule test --scenario-name rocky8
 
-ubuntu1804:
-  stage: molecule-test
-  script:
-    - molecule test --scenario-name ubuntu1804
-
 ubuntu2004:
   stage: molecule-test
   script:
     - molecule test --scenario-name ubuntu2004
+
+ubuntu2204:
+  stage: molecule-test
+  script:
+    - molecule test --scenario-name ubuntu2204
