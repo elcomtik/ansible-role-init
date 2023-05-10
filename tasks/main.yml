@@ -141,7 +141,7 @@
 
 # This will succed only if new ansible_user can access remote host
 - name: "Remove ssh key from bootstrap user when enabled"
-  ansible.builtin.authorized_key:
+  ansible.posix.authorized_key:
     user: '{{ bootstrap_user }}'
     key: '{{ item }}'
     state: 'absent'
