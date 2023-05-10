@@ -1,10 +1,10 @@
 # Python requirements for executing
-ansible
+ansible ~=7.0
 ansible-lint
 docker
 mkdocs
-molecule
-molecule-docker
+molecule-plugins[docker]
 pip-tools
+requests <2.29.0  #https://github.com/docker/docker-py/issues/3113
 yamllint
 selinux

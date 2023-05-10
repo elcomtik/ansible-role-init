@@ -11,12 +11,13 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: centos8
-    image: mrlesmithjr/centos:8
+  - name: fedora38
+    image: mrlesmithjr/fedora:38
     privileged: true
     command: /usr/sbin/init
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
 provisioner:
   name: ansible
   playbooks:

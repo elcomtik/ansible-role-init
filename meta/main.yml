@@ -4,26 +4,27 @@ galaxy_info:
   role_name: init
   author: Roman Danko
   description: Initial configuration of host to prepare for Ansible
-  license: "MIT"
-  min_ansible_version: "2.10"
+  license: MIT
+  min_ansible_version: '7'
 
   platforms:
-    - name: EL
-      versions:
-        - "7"
-        - "8"
     - name: Fedora
       versions:
-        - all
+        - '36'
+        - '37'
+        - '38'
+    - name: EL
+      versions:
+        - '7'
+        - '8'
     - name: Debian
       versions:
-        - stretch
         - buster
         - bullseye
     - name: Ubuntu
       versions:
-        - bionic
         - focal
+        - jammy
 
   galaxy_tags:
     - intialize
